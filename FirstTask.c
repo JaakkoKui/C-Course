@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define months 12
 #define studentNumber 45001
@@ -8,10 +9,12 @@
 int count = 0;
 float salaries[months];
 float yearlyTotal = 0.0;
+int invalidFlag = 0;
 int i;
 
 float average(float sum, int count);
 float salaryCalc(int i);
+float invalidCheck();
 
 float average(float sum, int count)
 {
@@ -22,10 +25,18 @@ float average(float sum, int count)
 
 float salaryCalc(int i)
 {
-    
     printf("Give the salary of month %d\n", i + 1);
-    scanf("%f", &salaries[i]);
-    if (salaries[i] < 0)
+
+    if (invalidFlag)
+    {
+        printf("Invalid input!\n");
+        invalidFlag = 0;
+    }
+    if (scanf("%f", &salaries[i]) != 1)
+    {
+        invalidCheck();
+    }
+    else if (salaries[i] < 0)
     {
         printf("No negative numbers\n");
     }
@@ -33,6 +44,19 @@ float salaryCalc(int i)
     {
         yearlyTotal += salaries[i];
         printf("Sum: %.2f\n", yearlyTotal);
+    }
+}
+
+float invalidCheck()
+{
+    if (invalidFlag)
+    {
+        printf("Invalid input!\n");
+        invalidFlag = 0;
+    }
+    else
+    {
+        while (getchar() != '\n');
     }
 }
 
@@ -52,16 +76,21 @@ int main(void)
 
         switch (task)
         {
-
         // This calculates the average of numbers given by the user, no negative numbers allowed and 0 ends the feed.
         case 1:
             float number = 1.0;
             float sum = 0.0;
+            int count = 0;
             do
             {
-                printf("Give numbers that you want the average calculated of one by one, no negative numbers and 0 ends the feed.\n");
-                scanf("%f", &number);
-                if (number < 0)
+                printf("Give numbers that you want the average calculated of one by one, no negative numbers or letters, 0 ends the feed.\n");
+                invalidCheck();
+                if (scanf("%f", &number) != 1)
+                {
+                    invalidFlag = 1;
+                    invalidCheck();
+                }
+                else if (number < 0)
                 {
                     printf("No negative numbers!\n");
                 }
@@ -84,6 +113,10 @@ int main(void)
             for (i = 0; i < 12; i++)
             {
                 salaryCalc(i);
+                if (invalidFlag)
+                {
+                    i--;
+                }
             }
 
             for (i = 0; i < 12; i++)
@@ -99,8 +132,13 @@ int main(void)
         case 3:
             float gradesTotal = 0.0;
             int size;
-            printf("Give the number of students, no negative or over 100\n");
-            scanf("%d", &size);
+            printf("Give the number of students, no negative numbers or numbers over 100.\n");
+
+            invalidCheck();
+            if (scanf("%f", &size) != 1)
+            {
+                invalidCheck();
+            }
 
             if (size > 0 && size <= maxStudents)
             {
@@ -111,11 +149,11 @@ int main(void)
                     array[i] = 0;
                 }
 
-                printf("Give the grades of the students\n");
+                printf("Give the grades (1-5) of the students\n");
                 for (i = 0; i < size; i++)
                 {
                     int grade;
-                    printf("Give grade of student %d\n", i + studentNumber);
+                    printf("Give grade (1-5) of student: %d\n", i + studentNumber);
                     scanf("%d", &grade);
                     if (grade > 0 && grade < 6)
                     {
