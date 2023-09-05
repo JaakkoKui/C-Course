@@ -39,13 +39,11 @@ int main(void) {
                             printf("No negative numbers!\n");
                         } else if (number == 0) {
                             printf("Average of given numbers: %.2f\n", average(sum, count));
-                            break;
                         } else {
                             sum += number;
                             count++;
                         }
                     }
-                    break;
                 }
 
                 case 2: {
