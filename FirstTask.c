@@ -62,7 +62,6 @@ int main(void)
         case 3:
 
             int size;
-            int array[size];
             printf("Give the number of students\n");
             scanf("%d", &size);
 
@@ -88,7 +87,7 @@ int main(void)
             }
 
             break;
-
+        
         default:
             printf("No such task!\n");
             break;
