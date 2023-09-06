@@ -83,11 +83,11 @@ int main(void) {
                         struct Student students[MAX_STUDENTS];
                         float gradesTotal = 0.0;
 
-                        printf("Give the grades (1-5) of the students\n");
+                        printf("Give the grades (0-5) of the students\n");
                         for (int i = 0; i < size; i++) {
-                            printf("Give grade (1-5) of student: %d\n", i + 1);
+                            printf("Give grade (0-5) of student: %d\n", i + 1);
                             int grade;
-                            if (scanf("%d", &grade) != 1 || grade < 1 || grade > 5) {
+                            if (scanf("%d", &grade) != 1 || grade < 0 || grade > 5) {
                                 printf("Invalid grade!\n");
                                 while (getchar() != '\n');  // Clear the input buffer
                                 i--;  // Retry input for the current student
