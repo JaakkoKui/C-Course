@@ -22,10 +22,11 @@ int main(void) {
         int task;
         if (scanf("%d", &task) != 1) {
             printf("Invalid input!\n");
-            while (getchar() != '\n');  // Clear the input buffer
+            while (getchar() != '\n');
         } else {
             switch (task) {
                 case 1: {
+                    // This calculates the average of the given numbers, no negative numbers or letters, 0 ends the feed
                     float number = 1.0;
                     float sum = 0.0;
                     int count = 0;
@@ -34,7 +35,7 @@ int main(void) {
                         printf("Give numbers that you want the average calculated of one by one, no negative numbers or letters, 0 ends the feed.\n");
                         if (scanf("%f", &number) != 1) {
                             printf("Invalid input!\n");
-                            while (getchar() != '\n');  // Clear the input buffer
+                            while (getchar() != '\n');
                         } else if (number < 0) {
                             printf("No negative numbers!\n");
                         } else if (number == 0) {
@@ -47,8 +48,9 @@ int main(void) {
                     }
                     break;
                 }
-
+                
                 case 2: {
+                    // This calculates the average of the given salaries and the total yearly income, no negative numbers or letters
                     float salaries[MAX_MONTHS];
                     float yearlyTotal = 0.0;
 
@@ -57,8 +59,8 @@ int main(void) {
                         float salary;
                         if (scanf("%f", &salary) != 1 || salary < 0) {
                             printf("Invalid input!\n");
-                            while (getchar() != '\n');  // Clear the input buffer
-                            i--;  // Retry input for the current month
+                            while (getchar() != '\n');
+                            i--;
                         } else {
                             yearlyTotal += salary;
                             salaries[i] = salary;
@@ -74,11 +76,12 @@ int main(void) {
                 }
 
                 case 3: {
+                    // This calculates the average of the given grades and prints them out, no negative numbers or letters
                     int size;
                     printf("Give the number of students (1-%d)\n", MAX_STUDENTS);
                     if (scanf("%d", &size) != 1 || size <= 0 || size > MAX_STUDENTS) {
                         printf("Invalid input!\n");
-                        while (getchar() != '\n');  // Clear the input buffer
+                        while (getchar() != '\n');
                     } else {
                         struct Student students[MAX_STUDENTS];
                         float gradesTotal = 0.0;
@@ -89,8 +92,8 @@ int main(void) {
                             int grade;
                             if (scanf("%d", &grade) != 1 || grade < 0 || grade > 5) {
                                 printf("Invalid grade!\n");
-                                while (getchar() != '\n');  // Clear the input buffer
-                                i--;  // Retry input for the current student
+                                while (getchar() != '\n');
+                                i--;
                             } else {
                                 students[i].id = i + 1;
                                 students[i].grade = grade;
