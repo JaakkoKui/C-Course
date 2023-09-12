@@ -24,7 +24,7 @@ int main(void)
 {
     while (1)
     {
-        printf("Choose task to run:\n4. Calculate scalar product of two given 3 number vectors.\n5. Given strings white space to underscores.\n6.\n0. Exit\n");
+        printf("Choose task to run:\n4. Calculate scalar product of two given 3 number vectors.\n5. Given strings white space to underscores.\n6. Sleep calulator\n0. Exit\n");
         int task;
         if (scanf("%d", &task) != 1)
         {
@@ -92,6 +92,65 @@ int main(void)
 
             case 6:
             {
+                char timeNow[10];
+                char sleepWanted[10];
+                int hoursNow, minutesNow, sleepHoursWanted, sleepMinutesWanted, wakeUpHours, wakeUpMinutes;
+
+
+                getchar();
+                printf("Enter current time (hh:mm): ");
+                fgets(timeNow, sizeof(timeNow), stdin);
+                if (sscanf(timeNow, "%d:%d", &hoursNow, &minutesNow) == 2)
+                {
+                    if (hoursNow >= 0 && hoursNow <= 23 && minutesNow >= 0 && minutesNow <= 59)
+                    {
+                        printf("Time entered correctly.\n");
+                    }
+                    else
+                    {
+                        printf("Invalid time entered.\n");
+                        break;
+                    }
+                }
+                else
+                {
+                    printf("Invalid input.\n");
+                    break;
+                }
+
+                printf("How long do you want to sleep (h:mm): ");
+                fgets(sleepWanted, sizeof(sleepWanted), stdin);
+                if (sscanf(sleepWanted, "%d:%d", &sleepHoursWanted, &sleepMinutesWanted) == 2)
+                {
+                    if (sleepHoursWanted >= 0 && sleepHoursWanted <= 9 && sleepMinutesWanted >= 0 && sleepMinutesWanted <= 59)
+                    {
+                        printf("Time entered correctly. %d:%d\n", sleepHoursWanted, sleepMinutesWanted);
+                    }
+                    else
+                    {
+                        printf("Invalid time entered.\n");
+                        break;
+                    }
+                }else{
+                    printf("something went wrong");
+                }
+
+
+                wakeUpHours = hoursNow + sleepHoursWanted;
+                wakeUpMinutes = minutesNow + sleepMinutesWanted;
+
+                if (wakeUpMinutes > 59)
+                {
+                    wakeUpHours++;
+                    wakeUpMinutes -= 60;
+                }
+
+                if (wakeUpHours > 23)
+                {
+                    wakeUpHours -= 24;
+                }
+
+                printf("Time now: %s\nSleep wanted: %s\nWakeup: %d:%d\n", timeNow, sleepWanted, wakeUpHours, wakeUpMinutes);
                 break;
             }
 
