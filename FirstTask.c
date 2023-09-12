@@ -15,14 +15,18 @@ float average(float sum, int count) {
     return (count > 0) ? (sum / count) : 0;
 }
 
+void ifInvalidInput() {
+    printf("Invalid input!\n");
+    while (getchar() != '\n');
+}
+
 int main(void) {
     while (1) {
         printf("Choose task to run:\n1. Average of given numbers\n2. Yearly salary calculator\n3. Student grader\n0. Exit\n");
 
         int task;
         if (scanf("%d", &task) != 1) {
-            printf("Invalid input!\n");
-            while (getchar() != '\n');
+
         } else {
             switch (task) {
                 case 1: {
@@ -34,8 +38,7 @@ int main(void) {
                     while(1) {
                         printf("Give numbers that you want the average calculated of one by one, no negative numbers or letters, 0 ends the feed.\n");
                         if (scanf("%f", &number) != 1) {
-                            printf("Invalid input!\n");
-                            while (getchar() != '\n');
+                            ifInvalidInput();
                         } else if (number < 0) {
                             printf("No negative numbers!\n");
                         } else if (number == 0) {
@@ -58,8 +61,7 @@ int main(void) {
                         printf("Give the salary of month %d\n", i + 1);
                         float salary;
                         if (scanf("%f", &salary) != 1 || salary < 0) {
-                            printf("Invalid input!\n");
-                            while (getchar() != '\n');
+                            ifInvalidInput();
                             i--;
                         } else {
                             yearlyTotal += salary;
@@ -80,8 +82,7 @@ int main(void) {
                     int size;
                     printf("Give the number of students (1-%d)\n", MAX_STUDENTS);
                     if (scanf("%d", &size) != 1 || size <= 0 || size > MAX_STUDENTS) {
-                        printf("Invalid input!\n");
-                        while (getchar() != '\n');
+                        ifInvalidInput();
                     } else {
                         struct Student students[MAX_STUDENTS];
                         float gradesTotal = 0.0;
@@ -91,8 +92,7 @@ int main(void) {
                             printf("Give grade (0-5) of student: %d\n", i + 1);
                             int grade;
                             if (scanf("%d", &grade) != 1 || grade < 0 || grade > 5) {
-                                printf("Invalid grade!\n");
-                                while (getchar() != '\n');
+                                ifInvalidInput();
                                 i--;
                             } else {
                                 students[i].id = i + 1;
