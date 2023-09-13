@@ -96,7 +96,6 @@ int main(void)
                 char sleepWanted[10];
                 int hoursNow, minutesNow, sleepHoursWanted, sleepMinutesWanted, wakeUpHours, wakeUpMinutes;
 
-
                 getchar();
                 printf("Enter current time (hh:mm): ");
                 fgets(timeNow, sizeof(timeNow), stdin);
@@ -131,10 +130,11 @@ int main(void)
                         printf("Invalid time entered.\n");
                         break;
                     }
-                }else{
+                }
+                else
+                {
                     printf("something went wrong");
                 }
-
 
                 wakeUpHours = hoursNow + sleepHoursWanted;
                 wakeUpMinutes = minutesNow + sleepMinutesWanted;
@@ -150,7 +150,7 @@ int main(void)
                     wakeUpHours -= 24;
                 }
 
-                printf("Time now: %s\nSleep wanted: %s\nWakeup: %d:%d\n", timeNow, sleepWanted, wakeUpHours, wakeUpMinutes);
+                printf("Time now: %s\nSleep wanted: %s\nWakeup: %d:%02d\n", timeNow, sleepWanted, wakeUpHours, wakeUpMinutes);
                 break;
             }
 
