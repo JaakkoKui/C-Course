@@ -5,8 +5,7 @@
 void ifInvalidInput()
 {
     printf("Invalid input!\n");
-    while (getchar() != '\n')
-        ;
+    while (getchar() != '\n');
 }
 
 void replaceWhitespaceWithUnderscore(char *str)
@@ -53,8 +52,8 @@ int main(void)
                     else
                     {
                         printf("Numbers of vectors:\nVector 1: %g %g %g\nVector 2: %g %g %g\n", n1, n2, n3, m1, m2, m3);
-                        float scalar = n1 * m1 + n2 * m2 + n3 * m3;
-                        printf("Scalar product of vectors is %g \n\n", scalar);
+                        float dot = n1 * m1 + n2 * m2 + n3 * m3;
+                        printf("Dot product of vectors is %g \n\n", dot);
                     }
                 }
                 break;
