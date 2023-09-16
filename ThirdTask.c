@@ -1,11 +1,12 @@
 #include <stdio.h>
-#include <stdbool.h>
+#include <ctype.h>
 #include <string.h>
 
 void ifInvalidInput()
 {
     printf("Invalid input!\n");
-    while (getchar() != '\n');
+    while (getchar() != '\n')
+        ;
 }
 
 int main(void)
@@ -24,9 +25,28 @@ int main(void)
             {
             case 7:
             {
-                break;
-            }
+                
+                struct keyValue
+                {
+                    char key;
+                    char value;
+                } map[26];
 
+                char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
+                char reversedAlphabet[] = "zyxwvutsrqponmlkjihgfedcba";
+
+                for (int i = 0; i < 26; i++)
+                {
+                    map[i].key = alphabet[i];
+                    map[i].value = reversedAlphabet[i];
+                }
+
+                for (int i = 0; i < 26; i++)
+                {
+                    printf("%c -> %c\n", map[i].key, map[i].value);
+                }
+                printf(map);
+            }
             case 8:
             {
                 break;
