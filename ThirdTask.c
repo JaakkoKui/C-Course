@@ -9,6 +9,38 @@ void ifInvalidInput()
         ;
 }
 
+struct keyValue
+{
+    char key;
+    char value;
+} map[26];
+
+char *cipher(char *text, char *cipheredText, struct keyValue *map)
+{
+    for (int i = 0; i < strlen(text); i++)
+    {
+        if (isalpha(text[i]))
+        {
+            for (int j = 0; j < 26; j++)
+            {
+                if (isupper(text[i]) && text[i] == toupper(map[j].key))
+                {
+                    cipheredText[i] = toupper(map[j].value);
+                }
+                else if (text[i] == map[j].key)
+                {
+                    cipheredText[i] = map[j].value;
+                }
+            }
+        }
+        else
+        {
+            cipheredText[i] = text[i];
+        }
+    }
+    return 0;
+}
+
 int main(void)
 {
     while (1)
@@ -25,50 +57,26 @@ int main(void)
             {
             case 7:
             {
-                char text[100] = "";
-                char cipheredText[100] = "";
-                struct keyValue
-                {
-                    char key;
-                    char value;
-                } map[26];
-
-                char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
-                char reversedAlphabet[] = "zyxwvutsrqponmlkjihgfedcba";
+                const char text[100] = "";
+                const char cipheredText[100] = "";
+                const char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
+                const char reversedAlphabet[] = "zyxwvutsrqponmlkjihgfedcba";
 
                 for (int i = 0; i < 26; i++)
                 {
+
                     map[i].key = alphabet[i];
                     map[i].value = reversedAlphabet[i];
                 }
 
-                printf("Enter text to cipher:\n");
-                while (getchar() != '\n')
-                    ;
+                printf("Enter text to cipher: ");
+                while (getchar() != '\n');
                 fgets(text, sizeof(text), stdin);
                 printf("\n");
-                for (int i = 0; i < strlen(text); i++)
-                {
-                    if (isalpha(text[i]))
-                    {
-                        for (int j = 0; j < 26; j++)
-                        {
-                            if (isupper(text[i]) && text[i] == toupper(map[j].key))
-                            {
-                                cipheredText[i] = toupper(map[j].value);
-                            }
-                            else if (text[i] == map[j].key)
-                            {
-                                cipheredText[i] = map[j].value;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        cipheredText[i] = text[i];
-                    }
-                }
+                cipher(text, cipheredText, map);
                 printf("Original text: %s\nCiphered text: %s\n", text, cipheredText);
+                cipher(cipheredText, text, map);
+                printf("Deciphered text: %s\n", text);
                 break;
             }
 
