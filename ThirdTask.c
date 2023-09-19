@@ -25,7 +25,8 @@ int main(void)
             {
             case 7:
             {
-                
+                char text[100] = "";
+                char cipheredText[100] = "";
                 struct keyValue
                 {
                     char key;
@@ -41,12 +42,30 @@ int main(void)
                     map[i].value = reversedAlphabet[i];
                 }
 
-                for (int i = 0; i < 26; i++)
+                printf("Enter text to cipher:\n");
+                while (getchar() != '\n');
+                fgets(text, sizeof(text), stdin);
+                printf("\n");
+                for (int i = 0; i < strlen(text); i++)
                 {
-                    printf("%c -> %c\n", map[i].key, map[i].value);
+                    if (isalpha(text[i]))
+                    { 
+                        for (int j = 0; j < 26; j++)
+                        {
+                            if (text[i] == map[j].key)
+                            {
+                                cipheredText[i] = map[j].value;
+                            }
+                        }
+                    }
+                    else{
+                        cipheredText[i] = text[i];
+                    }
                 }
-                printf(map);
+                printf("Original text: %s\nCiphered text: %s\n", text, cipheredText);
+                break;
             }
+
             case 8:
             {
                 break;
