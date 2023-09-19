@@ -43,22 +43,28 @@ int main(void)
                 }
 
                 printf("Enter text to cipher:\n");
-                while (getchar() != '\n');
+                while (getchar() != '\n')
+                    ;
                 fgets(text, sizeof(text), stdin);
                 printf("\n");
                 for (int i = 0; i < strlen(text); i++)
                 {
                     if (isalpha(text[i]))
-                    { 
+                    {
                         for (int j = 0; j < 26; j++)
                         {
-                            if (text[i] == map[j].key)
+                            if (isupper(text[i]) && text[i] == toupper(map[j].key))
+                            {
+                                cipheredText[i] = toupper(map[j].value);
+                            }
+                            else if (text[i] == map[j].key)
                             {
                                 cipheredText[i] = map[j].value;
                             }
                         }
                     }
-                    else{
+                    else
+                    {
                         cipheredText[i] = text[i];
                     }
                 }
