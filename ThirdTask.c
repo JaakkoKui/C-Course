@@ -5,8 +5,7 @@
 void ifInvalidInput()
 {
     printf("Invalid input!\n");
-    while (getchar() != '\n')
-        ;
+    while (getchar() != '\n');
 }
 
 struct keyValue
@@ -93,8 +92,7 @@ int main(void)
                 }
 
                 printf("Enter text to cipher: ");
-                while (getchar() != '\n')
-                    ;
+                while (getchar() != '\n');
                 fgets(text, sizeof(text), stdin);
                 printf("\n");
                 cipher(text, cipheredText, map);
@@ -106,7 +104,6 @@ int main(void)
 
             case 8:
             {
-
                 char findCity[20];
                 struct Student students[15] = {
                     {"Santeri", 666, "Mannerheimintie 1", "Helsinki", 0},
@@ -151,12 +148,16 @@ int main(void)
                     else
                     {
                         printf("Students living in given city found: %d\n\n", found);
+                        amount = 0;
                     }
                 }
             }
 
             case 9:
             {
+
+                printf("%ld\n", __STDC_VERSION__);
+                return 0;
                 break;
             }
 
