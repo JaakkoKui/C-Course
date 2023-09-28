@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#define MAX_ITEMS 100
 
 void ifInvalidInput()
 {
@@ -22,6 +23,7 @@ struct Student
     char city[20];
     float totalCredits;
 };
+
 int amount = 0;
 char *cipher(char *text, char *cipheredText, struct keyValue *map)
 {
@@ -92,7 +94,8 @@ int main(void)
                 }
 
                 printf("Enter text to cipher: ");
-                while (getchar() != '\n');
+                while (getchar() != '\n')
+                    ;
                 fgets(text, sizeof(text), stdin);
                 printf("\n");
                 cipher(text, cipheredText, map);
@@ -155,9 +158,47 @@ int main(void)
 
             case 9:
             {
+                struct priceInfo
+                {
+                    char name[20];
+                    float price;
+                };
+                int itemCount = 0;
+                struct priceInfo items[MAX_ITEMS];
+                printf("Enter item information (name first, 'stop' to stop):\n");
+                while (itemCount < MAX_ITEMS)
+                {
+                    char name[20];
+                    double price;
 
-                printf("%ld\n", __STDC_VERSION__);
-                return 0;
+                    printf("Enter item name: ");
+                    scanf("%s", name);
+
+                    if (stricmp(name, "stop") == 0)
+                    {
+                        break;
+                    }
+
+                    printf("Enter item price: ");
+                    scanf("%lf", &price);
+
+                    strcpy(items[itemCount].name, name);
+                    items[itemCount].price = price;
+                    itemCount++;
+                }
+                FILE *file = fopen("pricelist.txt", "w");
+                if (file == NULL)
+                {
+                    printf("Error opening the file for writing.\n");
+                    return 1;
+                }
+                for (int i = 0; i < itemCount; i++)
+                {
+                    fprintf(file, "%.2lf;%s\n", items[i].price, items[i].name);
+                }
+                fclose(file);
+
+                printf("Item information has been written to 'pricelist.txt'.\n");
                 break;
             }
 
