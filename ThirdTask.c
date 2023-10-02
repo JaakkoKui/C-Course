@@ -94,8 +94,7 @@ int main(void)
                 }
 
                 printf("Enter text to cipher: ");
-                while (getchar() != '\n')
-                    ;
+                while (getchar() != '\n');
                 fgets(text, sizeof(text), stdin);
                 printf("\n");
                 cipher(text, cipheredText, map);
@@ -154,6 +153,7 @@ int main(void)
                         amount = 0;
                     }
                 }
+                break;
             }
 
             case 9:
