@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 using namespace std;
 
@@ -17,7 +18,8 @@ public:
     };
     void display()
     {
-        cout << hours << ":" << minutes << endl;
+        std::cout << std::setfill('0') << std::setw(2) << hours << ":"
+                  << std::setw(2) << minutes << std::endl;
     };
     int lessThan(Time comparedTime)
     {
@@ -42,7 +44,9 @@ public:
             {
                 cout << "Compared time is greater than time 1\n";
                 return 1;
-            }else{
+            }
+            else
+            {
                 cout << "Time 1 is equal to compared time\n";
             }
         }
@@ -51,6 +55,12 @@ public:
 
     Time subtract(Time lesserTime)
     {
+        if (minutes < lesserTime.minutes)
+        {
+            minutes += 60;
+            hours--;
+        }
+
         Time duration = {hours - lesserTime.hours, minutes - lesserTime.minutes};
         return duration;
     };
