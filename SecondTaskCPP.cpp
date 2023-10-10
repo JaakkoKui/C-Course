@@ -64,6 +64,20 @@ public:
         Time duration = {hours - lesserTime.hours, minutes - lesserTime.minutes};
         return duration;
     };
+    /*ostream& Time::operator<<(ostream& os, const Time& time)
+    {
+        os << std::setfill('0') << std::setw(2) << time.hours << ":"
+                  << std::setw(2) << time.minutes << std::endl;
+        return os;
+    }*/
+
+    Time operator+(const Time& time)
+    {
+        Time sum = {hours + time.hours, minutes + time.minutes};
+        return sum;
+    }
+
+
 };
 
 int main()
@@ -85,5 +99,8 @@ int main()
     }
     cout << "Duration was ";
     duration.display();
+    cout << "Sum of times is ";
+    Time sum = time1 + time2;
+    sum.display();
     return 0;
 }
