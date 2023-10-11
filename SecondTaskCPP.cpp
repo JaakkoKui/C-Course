@@ -18,8 +18,9 @@ public:
     };
     void display()
     {
-        std::cout << std::setfill('0') << std::setw(2) << hours << ":"
-                  << std::setw(2) << minutes << std::endl;
+        cout << hours << ":" << minutes << endl;
+        /*  std::cout << std::setfill('0') << std::setw(2) << hours << ":"
+                    << std::setw(2) << minutes << std::endl;*/
     };
     int lessThan(Time comparedTime)
     {
@@ -71,13 +72,11 @@ public:
         return os;
     }*/
 
-    Time operator+(const Time& time)
+    Time operator+(const Time &time)
     {
         Time sum = {hours + time.hours, minutes + time.minutes};
         return sum;
-    }
-
-
+    };
 };
 
 int main()
