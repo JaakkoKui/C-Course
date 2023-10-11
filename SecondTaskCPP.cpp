@@ -77,6 +77,12 @@ public:
         Time sum = {hours + time.hours, minutes + time.minutes};
         return sum;
     };
+
+    Time operator-(const Time &time)
+    {
+        Time difference = {hours - time.hours, minutes - time.minutes};
+        return difference;
+    };
 };
 
 int main()
@@ -98,8 +104,11 @@ int main()
     }
     cout << "Duration was ";
     duration.display();
-    cout << "Sum of times is ";
     Time sum = time1 + time2;
+    Time difference = time1 - time2;
+    cout << "Sum of times is ";
     sum.display();
+    cout << "Time 1 minus time 2 is ";
+    difference.display();
     return 0;
 }
