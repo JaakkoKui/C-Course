@@ -70,11 +70,18 @@ public:
         os << std::setfill('0') << std::setw(2) << time.hours << ":"
                   << std::setw(2) << time.minutes << std::endl;
         return os;
-    }*/
-
+    }
+*/
     Time operator+(const Time &time)
     {
-        Time sum = {hours + time.hours, minutes + time.minutes};
+        int totalMinutes = minutes + time.minutes;
+        int extraHours = totalMinutes / 60;
+        int newMinutes = totalMinutes % 60;
+        int newHours = hours + time.hours + extraHours;
+
+        Time sum = {
+            newHours, newMinutes};
+
         return sum;
     };
 
