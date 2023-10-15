@@ -16,6 +16,17 @@ public:
         cout << "Minutes: ";
         cin >> minutes;
     };
+
+    Time(){
+        hours = 0;
+        minutes = 0;
+    };
+
+    Time(int HTime, int MTime){
+        this->hours = HTime;
+        this->minutes = MTime;
+    }
+    
     void display()
     {
         cout << hours << ":" << minutes << endl;
@@ -83,10 +94,24 @@ public:
         Time difference = {hours - time.hours, minutes - time.minutes};
         return difference;
     };
+
+    Time operator++(){
+        int raisedHours = hours;
+        int raisedMinutes = minutes++;
+        if(raisedMinutes >= 60){
+            raisedMinutes = 0;
+            raisedHours++;
+        }
+        Time raised = {raisedHours, raisedMinutes};
+        return raised;
+    };
+
+
 };
 
 int main()
 {
+    cout << "Task 1b:\n";
     Time time1, time2, duration;
     time1.read("Enter time 1");
     time2.read("Enter time 2");
@@ -104,11 +129,70 @@ int main()
     }
     cout << "Duration was ";
     duration.display();
-    Time sum = time1 + time2;
+/*    Time sum = time1 + time2;
     Time difference = time1 - time2;
+    Time raised = time++;
+    cout << "Raised time is ";
     cout << "Sum of times is ";
     sum.display();
     cout << "Time 1 minus time 2 is ";
     difference.display();
-    return 0;
+*/    
+
+    cout << "Task 2b:\n";
+
+    Time time1b, time2b, durationB, duration2B;
+
+	time1b.read("Enter time 1");
+	time2b.read("Enter time 2");
+	if (time1b<time2b) {
+		durationB = time2b - time1b;
+		cout << "Starting time was " << time1b << endl;
+		duration2B = time1b - time2b;
+	} else {
+		durationB = time1b - time2b;
+		cout << "Starting time was " << time2b << endl;
+		duration2B = time2b - time1b;
+
+	}
+	cout << "Duration was " << durationB << endl;
+
+	// check that we don't get negative times
+	cout << "Duration2 was " << duration2B << endl;
+
+
+	vector<Time> tv(5); 
+	for(auto &t : tv) {
+		t.read("Enter time:");
+	}
+
+	cout << "Times: " << endl;
+	print(tv);
+	
+	Time sum;
+	for(auto t : tv) {
+		sum = sum + t;
+	}
+	
+	cout << "Sum of times: " << sum << endl;
+	
+	cout << "Post-increment: " << endl;
+	print(tv);
+	for(auto &t : tv) {
+		cout << t++ << endl;
+	}
+	
+	print(tv);
+
+	cout << "Pre-increment: " << endl;
+	for(auto &t : tv) {
+		cout << ++t << endl;
+	}
+
+	sort(tv.begin(), tv.end());
+
+	cout << "Sorted times: " << endl;
+	print(tv);
+
+	return 0;
 }
