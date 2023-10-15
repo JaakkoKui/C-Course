@@ -11,6 +11,12 @@ class Time
 public:
     int hours, minutes;
 
+    Time()
+        : hours(0), minutes(0) {}
+
+    Time(int HTime, int MTime)
+        : hours(HTime), minutes(MTime) {}
+
     void read(string s)
     {
         cout << s << endl;
@@ -18,115 +24,44 @@ public:
         cin >> hours;
         cout << "Minutes: ";
         cin >> minutes;
-    };
-
-    Time()
-    {
-        hours = 0;
-        minutes = 0;
-    };
-
-    Time(int HTime, int MTime)
-    {
-        this->hours = HTime;
-        this->minutes = MTime;
     }
 
     void display()
     {
-        cout << hours << ":" << minutes << endl;
-    };
-
-    int lessThan(Time comparedTime)
-    {
-        if (hours > comparedTime.hours)
-        {
-            cout << "Time 1 is greater than compared time\n";
-            return 0;
-        }
-        else if (hours < comparedTime.hours)
-        {
-            cout << "Compared time is greater than time 1\n";
-            return 1;
-        }
-        else
-        {
-            if (minutes > comparedTime.minutes)
-            {
-                cout << "Time 1 is greater than compared time\n";
-                return 0;
-            }
-            else if (hours < comparedTime.hours)
-            {
-                cout << "Compared time is greater than time 1\n";
-                return 1;
-            }
-            else
-            {
-                cout << "Time 1 is equal to compared time\n";
-            }
-        }
-        return 0;
-    };
-
-    Time subtract(Time lesserTime)
-    {
-        if (minutes < lesserTime.minutes)
-        {
-            minutes += 60;
-            hours--;
-        }
-
-        Time duration = {hours - lesserTime.hours, minutes - lesserTime.minutes};
-        return duration;
-    };
-
-    Time operator+(const Time &time) const
-    {
-        int totalMinutes = (minutes + time.minutes) + (hours + time.hours) * 60;
-        int newHours = totalMinutes / 60;
-        int newMinutes = totalMinutes % 60;
-        return Time(newHours, newMinutes);
-    }
-
-    Time operator-(const Time &time) const
-    {
-        int totalMinutes = (minutes - time.minutes) + (hours - time.hours) * 60;
-        int newHours = totalMinutes / 60;
-        int newMinutes = totalMinutes % 60;
-
-        if (newHours < 0)
-        {
-            newHours += 24;
-        }
-
-        if (newMinutes < 0)
-        {
-            newMinutes += 60;
-            newHours--;
-        }
-
-        return Time(newHours, newMinutes);
-    }
-
-    friend ostream &operator<<(ostream &os, const Time &time)
-    {
-        os << std::setfill('0') << std::setw(2) << time.hours << ":"
-           << std::setw(2) << time.minutes;
-        return os;
+        cout << setfill('0') << setw(2) << hours << ":" << setw(2) << minutes << endl;
     }
 
     bool operator<(const Time &comparedTime) const
     {
-        if (hours < comparedTime.hours)
-        {
-            return true;
-        }
-        else if (hours == comparedTime.hours)
-        {
+        if (hours == comparedTime.hours)
             return minutes < comparedTime.minutes;
+        return hours < comparedTime.hours;
+    }
+
+    Time subtract(const Time &lesserTime) const
+    {
+        int totalMinutes = (hours - lesserTime.hours) * 60 + (minutes - lesserTime.minutes);
+        if (totalMinutes < 0)
+        {
+            totalMinutes += 24 * 60;
         }
-        return false;
+        return Time(totalMinutes / 60, totalMinutes % 60);
+    }
+
+    Time operator+(const Time &time) const
+    {
+        int totalMinutes = hours * 60 + minutes + time.hours * 60 + time.minutes;
+        return Time(totalMinutes / 60, totalMinutes % 60);
+    }
+
+    Time operator-(const Time &time) const
+    {
+        int totalMinutes = (hours - time.hours) * 60 + (minutes - time.minutes);
+        if (totalMinutes < 0)
+        {
+            totalMinutes += 24 * 60;
+        }
+        return Time(totalMinutes / 60, totalMinutes % 60);
     }
 
     Time &operator++()
@@ -135,29 +70,32 @@ public:
         if (minutes >= 60)
         {
             minutes = 0;
-            hours++;
-            if (hours >= 24)
-            {
-                hours = 0;
-            }
+            hours = (hours + 1) % 24;
         }
         return *this;
     }
- 
+
     Time operator++(int)
     {
         Time temp = *this;
         ++(*this);
         return temp;
+    }
+
+    friend ostream &operator<<(ostream &os, const Time &time)
+    {
+        os << setfill('0') << setw(2) << time.hours << ":" << setw(2) << time.minutes;
+        return os;
+    }
 };
 
-void print(vector<Time> &v)
+void print(const vector<Time> &v)
 {
-    for (Time &t : v)
+    for (const Time &t : v)
     {
         cout << t << endl;
     }
-};
+}
 
 int main()
 {
@@ -165,7 +103,7 @@ int main()
     Time time1, time2, duration;
     time1.read("Enter time 1");
     time2.read("Enter time 2");
-    if (time1.lessThan(time2))
+    if (time1 < time2)
     {
         duration = time2.subtract(time1);
         cout << "Starting time was ";
@@ -179,8 +117,6 @@ int main()
     }
     cout << "Duration was ";
     duration.display();
-
-// --------------TASK 2B--------------
 
     cout << "Task 2b:\n";
 
@@ -202,11 +138,10 @@ int main()
         duration2B = time2b - time1b;
     }
     cout << "Duration was " << durationB << endl;
-
     cout << "Duration2 was " << duration2B << endl;
 
     vector<Time> tv(5);
-    for (auto &t : tv)
+    for (Time &t : tv)
     {
         t.read("Enter time:");
     }
@@ -214,7 +149,7 @@ int main()
     cout << "Times: " << endl;
     print(tv);
     Time sum;
-    for (auto t : tv)
+    for (const Time &t : tv)
     {
         sum = sum + t;
     }
@@ -223,7 +158,7 @@ int main()
 
     cout << "\nPost-increment: " << endl;
     print(tv);
-    for (auto &t : tv)
+    for (Time &t : tv)
     {
         cout << t++ << endl;
     }
@@ -231,7 +166,7 @@ int main()
     print(tv);
 
     cout << "\nPre-increment: " << endl;
-    for (auto &t : tv)
+    for (Time &t : tv)
     {
         cout << ++t << endl;
     }
@@ -243,4 +178,3 @@ int main()
 
     return 0;
 }
-};
